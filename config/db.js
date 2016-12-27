@@ -1,5 +1,5 @@
 'use strict';
-const {MONGO_URI} = process.env
+const {MONGODB_URI} = process.env
 let mongoose = require( 'mongoose' ),
 
     dbURI = MONGODB_URI,
