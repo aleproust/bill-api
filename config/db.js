@@ -2,7 +2,7 @@
 const {MONGO_URI} = process.env
 let mongoose = require( 'mongoose' ),
 
-    dbURI = MONGO_URI,
+    dbURI = MONGODB_URI,
     dbOptions = {user: '', pass: ''},
     fs = require('fs');
 
