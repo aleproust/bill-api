@@ -30,7 +30,7 @@ function getBillDoc(bill) {
 }
 
 function prepareData(bill) {
-  let {customerName, number, billTotalHT, billTotalTTC, type, formattedDate, interventions} = bill.data
+  let {customerName, customerAddress, customerCity, customerPostalCode, number, billTotalHT, billTotalTTC, type, formattedDate, interventions} = bill.data
   interventions20 = interventions.filter(({tva}) => tva === '20')
   interventions10 = interventions.filter(({tva}) => tva === '10')
   let amountTVA20 = calculateService.calculateTvaAmount(interventions20);
@@ -38,6 +38,9 @@ function prepareData(bill) {
 
   return {
     customerName,
+    customerAddress,
+    customerCity : customerCity.city,
+    customerPostalCode,
     number,
     billTotalHT,
     billTotalTTC,
