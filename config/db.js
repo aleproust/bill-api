@@ -2,7 +2,7 @@
 const {MONGODB_URI} = process.env
 let mongoose = require( 'mongoose' ),
 
-    dbURI = MONGODB_URI,
+    dbURI = MONGODB_URI || 'mongodb://localhost:27017',
     dbOptions = {user: '', pass: ''},
     fs = require('fs');
 
