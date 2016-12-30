@@ -74,13 +74,12 @@ function findBills(req, res) {
 
     let dateCriteria = getDateCriteria(criteriaObject.value)
     Bill.find({
-      'date':{ $gte:dateCriteria.start, $lt:dateCriteria.end }
+      'data.date':{ $gte:dateCriteria.start, $lt:dateCriteria.end }
   })
   .then(bills=> {
-    console.log(bills)
-    res.send(bills)
+    res.status(200).json(bills)
   })
-  .catch(error => controle.log(error))
+  .catch(error => console.log(error))
 
   }
 
