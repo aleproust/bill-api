@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
 
 var BillSchema  = new Schema({
     date: { type: Date, default: Date.now },
-    data: Object,
+    data: {
+      date:{type: Date}
+    },
     number:{type:String, unique:true}
 });
 

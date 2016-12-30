@@ -1,5 +1,6 @@
 // Module dependencie
 let express = require('express'),
+  moment = require('moment'),
   router = express.Router(),
   mongoose = require('mongoose'),
   DOCX = require('../../services/docx/docx.service'),
@@ -8,7 +9,8 @@ mongoose.Promise = Promise;
 api = {
   getBills: getBills,
   postBills: postBills,
-  putBills: putBills
+  putBills: putBills,
+  findBills: findBills
 };
 
 
@@ -23,7 +25,7 @@ function getBills(req, res) {
   } else {
     let type = req.query.type;
     query = Bill.find({
-      'data.type' : type
+      'data.type': type
     })
   }
   query.then(bill => {
@@ -41,16 +43,16 @@ function postBills(req, res) {
   bill.data = req.body;
   bill.save()
     .then(bill => {
-      DOCX.writeBillDoc(bill.toObject())
-      return  res.status(201).json(bill.toObject())
+      return res.status(201).json(bill.toObject())
     })
     .catch(err => res.status(500).json(err))
 
-};
+}
+;
 
 // Put Bills
 function putBills(req, res) {
-  var billNumber = req.params.billNumber;
+  let billNumber = req.params.billNumber;
   Bill.findOneAndUpdate({
     "number": billNumber
   },
@@ -65,8 +67,39 @@ function putBills(req, res) {
     .catch(err => res.status(404).json(err))
 }
 
+// Find Bills
+function findBills(req, res) {
+  let criteriaObject = req.body;
+  if (criteriaObject.criteria === 'date') {
+
+    let dateCriteria = getDateCriteria(criteriaObject.value)
+    Bill.find({
+      'date':{ $gte:dateCriteria.start, $lt:dateCriteria.end }
+  })
+  .then(bills=> {
+    console.log(bills)
+    res.send(bills)
+  })
+  .catch(error => controle.log(error))
+
+  }
+
+
+}
+
+function getDateCriteria(date) {
+  let momentDate = moment(date)
+  let month = momentDate.get('month')
+  let year = momentDate.get('year')
+  let startDate = moment([year, month]);
+  let endDate = moment(startDate).endOf('month');
+  return {start : startDate.toDate(), end : endDate.toDate()}
+}
+
 router.get('/', api.getBills)
 router.get('/:billNumber', api.getBills);
+router.post('/find', api.findBills)
 router.post('/:billNumber', api.postBills);
 router.put('/:billNumber', api.putBills);
+
 module.exports = router;
