@@ -15,10 +15,11 @@ var BillSchema  = new Schema({
       customerPostalCode:{type:String},
       formattedDate:{type:String},
       interventions:{type: Array},
-      paid:{type:Boolean},
+      isPaid:{type:Boolean},
       paidDate:{type:Date},
       paidMethod:{type:String},
-      type:{type:String}
+      type:{type:String},
+      number:{type:String}
     },
     number:{type:String, unique:true}
 });
