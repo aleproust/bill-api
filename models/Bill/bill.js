@@ -7,8 +7,8 @@ var BillSchema  = new Schema({
     date: { type: Date, default: Date.now },
     data: {
       date:{type: Date},
-      billTotalHT: {type:String},
-      billTotalTTC: {type:String},
+      billTotalHT: {type:Number},
+      billTotalTTC: {type:Number},
       customerAddress : {type:String},
       customerCity : {type:Object},
       customerName:{type:String},
