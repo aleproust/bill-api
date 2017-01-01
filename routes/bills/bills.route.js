@@ -69,19 +69,25 @@ function putBills(req, res) {
 
 // Find Bills
 function findBills(req, res) {
+  let queryPromise = null;
   let criteriaObject = req.body;
   if (criteriaObject.criteria === 'date') {
-
     let dateCriteria = getDateCriteria(criteriaObject.value)
-    Bill.find({
+    queryPromise = Bill.find({
       'data.date':{ $gte:dateCriteria.start, $lt:dateCriteria.end }
-  })
+    })
+  }
+  else{
+    let searchObject = {}
+    searchObject[`data.${criteriaObject.criteria}`] = {'$regex':criteriaObject.value}
+    queryPromise = Bill.find(searchObject)
+  }
+  queryPromise
   .then(bills=> {
     res.status(200).json(bills)
   })
   .catch(error => console.log(error))
 
-  }
 
 
 }
