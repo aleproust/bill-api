@@ -26,7 +26,7 @@ function getBills(req, res) {
     let type = req.query.type;
     query = Bill.find({
       'data.type': type
-    })
+    }).sort({'data.date':'desc'})
   }
   query.then(bill => {
     res.status(200).json(bill)
@@ -82,7 +82,7 @@ function findBills(req, res) {
     searchObject[`data.${criteriaObject.criteria}`] = {'$regex':criteriaObject.value}
     queryPromise = Bill.find(searchObject)
   }
-  queryPromise
+  queryPromise.sort({'data.date':'desc'})
   .then(bills=> {
     res.status(200).json(bills)
   })
