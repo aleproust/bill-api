@@ -79,7 +79,7 @@ function findBills(req, res) {
   }
   else{
     let searchObject = {}
-    searchObject[`data.${criteriaObject.criteria}`] = {'$regex':criteriaObject.value}
+    searchObject[`data.${criteriaObject.criteria}`] = {'$regex':criteriaObject.value, $options:'i'}
     queryPromise = Bill.find(searchObject)
   }
   queryPromise.sort({'data.date':'desc'})
