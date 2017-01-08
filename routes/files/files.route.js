@@ -3,10 +3,12 @@ let express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   DOCX = require('../../services/docx/docx.service'),
+  XLS = require('../../services/xls/xls.service')
   Bill = require('../../models/Bill/bill').Bill;
 mongoose.Promise = Promise;
 let api = {
-  getBillDoc: getBillDoc
+  getBillDoc: getBillDoc,
+  generateBillsExcelList : generateBillsExcelList
 };
 
 function getBillDoc(req, res) {
@@ -22,5 +24,16 @@ function getBillDoc(req, res) {
   })
 
 }
+
+function generateBillsExcelList(req, res){
+    let billList = req.body
+    XLS.getExcelFile(billList).then(file => {
+        res.download(file);
+    })
+   
+     
+}
 router.get('/:billNumber', api.getBillDoc);
+router.post('/generateExcel', api.generateBillsExcelList);
+
 module.exports = router;

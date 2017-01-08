@@ -20,6 +20,7 @@
     "body-parser": "^1.15.2",
     "boom": "^2.8.0",
     "docxtemplater": "^3.0.2",
+    "exceljs": "^0.2.39",
     "express": "~4.13.3",
     "express-validator": "2.20.8",
     "fs": "0.0.1-security",

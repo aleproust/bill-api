@@ -19,7 +19,8 @@ var BillSchema  = new Schema({
       paidDate:{type:Date},
       paidMethod:{type:String},
       type:{type:String},
-      number:{type:String}
+      number:{type:String},
+      billType:{type:String}
     },
     number:{type:String, unique:true}
 });
